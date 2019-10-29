@@ -7,12 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mehrbod.digipaycodechallenge.login.LoginActivity
 import com.mehrbod.digipaycodechallenge.login.LoginRepository
+import com.mehrbod.digipaycodechallenge.track.TrackActivity
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.module
 
 class MainActivity : AppCompatActivity() {
 
-    val applicationModule = module {
+    private val applicationModule = module {
         single { LoginRepository() }
     }
 
@@ -24,8 +25,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        startKoin(this, listOf(applicationModule))
+        startKoin(applicationContext, listOf(applicationModule))
         openNeededActivity(sharedPreferences)
+        finish()
     }
 
     private fun openNeededActivity(preferences: SharedPreferences) {
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openTrackActivity() {
-
+        startActivity(Intent(this, TrackActivity::class.java))
     }
 
     private fun openLoginActivity() {

@@ -9,9 +9,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".login.LoginActivity"
-                  android:windowSoftInputMode="adjustResize"
-        >
+        <activity android:name=".track.TrackActivity">
+        </activity>
+        <activity
+                android:name=".login.LoginActivity"
+                android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
