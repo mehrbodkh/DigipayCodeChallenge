@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mehrbod.digipaycodechallenge.login.LoginActivity
-import com.mehrbod.digipaycodechallenge.search.SearchRepository
 import com.mehrbod.digipaycodechallenge.track.TrackActivity
 import com.mehrbod.digipaycodechallenge.track.TrackRepository
 import org.koin.android.ext.android.startKoin
@@ -16,7 +15,6 @@ import org.koin.dsl.module.module
 class MainActivity : AppCompatActivity() {
 
     private val applicationModule = module {
-        single { SearchRepository() }
         single { TrackRepository() }
     }
 

@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_track.*
 class TrackActivity : AppCompatActivity() {
     private val viewModel by viewModels<TrackViewModel>()
 
-    private lateinit var latestReleasesAdapter: LatestReleasesAdapter
+    private var latestReleasesAdapter = LatestReleasesAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,6 @@ class TrackActivity : AppCompatActivity() {
     }
 
     private fun setupList() {
-        latestReleasesAdapter = LatestReleasesAdapter(this)
         tracks_list.apply {
             this.adapter = latestReleasesAdapter
             layoutManager = GridLayoutManager(context, 2)

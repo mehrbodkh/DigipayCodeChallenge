@@ -1,11 +1,16 @@
 package com.mehrbod.digipaycodechallenge.track
 
+import android.util.Log
 import com.google.gson.Gson
 import com.mehrbod.digipaycodechallenge.api.LatestReleasesResponse
+import com.mehrbod.digipaycodechallenge.api.SearchResult
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.squareup.okhttp.HttpUrl
+
+
 
 class TrackRepository {
     companion object {
@@ -23,5 +28,21 @@ class TrackRepository {
 
         val response = client.newCall(request).execute().body().string()
         gson.fromJson(response, LatestReleasesResponse::class.java)
+    }
+
+    suspend fun doHandleSearch(query: String, token: String): SearchResult? = withContext(Dispatchers.IO) {
+        val urlBuilder = HttpUrl.parse("$BASE_URL/search").newBuilder().apply {
+            addQueryParameter("q", query)
+            addQueryParameter("type", "track")
+        }
+        val url = urlBuilder.build().toString()
+        val request = Request.Builder()
+            .header("Authorization", "Bearer $token")
+            .url(url)
+            .build()
+
+        val response = client.newCall(request).execute().body().string()
+        Log.d("MehrbodLog", response)
+        gson.fromJson(response, SearchResult::class.java)
     }
 }
