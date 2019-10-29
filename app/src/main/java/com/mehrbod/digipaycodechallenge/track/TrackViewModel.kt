@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.mehrbod.digipaycodechallenge.MainActivity.Companion.SHARED_PREFERENCES_NAME
 import com.mehrbod.digipaycodechallenge.MainActivity.Companion.TOKEN
 import com.mehrbod.digipaycodechallenge.api.LatestReleasesResponse
+import com.mehrbod.digipaycodechallenge.api.SpotifyRepository
 import com.mehrbod.digipaycodechallenge.api.isNetworkAvailable
 import kotlinx.coroutines.launch
 import org.koin.standalone.KoinComponent
@@ -15,7 +16,7 @@ import org.koin.standalone.inject
 import java.lang.Exception
 
 class TrackViewModel(val app: Application) : AndroidViewModel(app), KoinComponent {
-    private val repository: TrackRepository by inject()
+    private val repository: SpotifyRepository by inject()
 
     val latestTracks = MutableLiveData<LatestReleasesResponse?>()
     val error = MutableLiveData<String?>()

@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mehrbod.digipaycodechallenge.login.LoginActivity
 import com.mehrbod.digipaycodechallenge.track.TrackActivity
-import com.mehrbod.digipaycodechallenge.track.TrackRepository
+import com.mehrbod.digipaycodechallenge.api.SpotifyRepository
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.module
 
@@ -15,7 +15,7 @@ import org.koin.dsl.module.module
 class MainActivity : AppCompatActivity() {
 
     private val applicationModule = module {
-        single { TrackRepository() }
+        single { SpotifyRepository() }
     }
 
     companion object {

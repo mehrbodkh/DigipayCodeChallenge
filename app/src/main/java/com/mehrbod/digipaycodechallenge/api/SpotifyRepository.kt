@@ -1,9 +1,6 @@
-package com.mehrbod.digipaycodechallenge.track
+package com.mehrbod.digipaycodechallenge.api
 
-import android.util.Log
 import com.google.gson.Gson
-import com.mehrbod.digipaycodechallenge.api.LatestReleasesResponse
-import com.mehrbod.digipaycodechallenge.api.SearchResult
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +9,7 @@ import com.squareup.okhttp.HttpUrl
 
 
 
-class TrackRepository {
+class SpotifyRepository {
     companion object {
         const val BASE_URL = "https://api.spotify.com/v1"
     }
@@ -42,7 +39,6 @@ class TrackRepository {
             .build()
 
         val response = client.newCall(request).execute().body().string()
-        Log.d("MehrbodLog", response)
         gson.fromJson(response, SearchResult::class.java)
     }
 }
