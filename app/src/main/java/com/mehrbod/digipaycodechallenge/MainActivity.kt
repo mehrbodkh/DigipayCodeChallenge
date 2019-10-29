@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mehrbod.digipaycodechallenge.login.LoginActivity
-import com.mehrbod.digipaycodechallenge.login.LoginRepository
 import com.mehrbod.digipaycodechallenge.search.SearchRepository
 import com.mehrbod.digipaycodechallenge.track.TrackActivity
 import com.mehrbod.digipaycodechallenge.track.TrackRepository
@@ -24,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val SHARED_PREFERENCES_NAME = "DIGIPAY_CODE_CHALLENGE"
         const val IS_LOGGED_IN = "is_logged_in_already"
+        const val LAST_LOGIN = "last_login"
         const val TOKEN = "token"
     }
 
@@ -35,15 +35,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openNeededActivity(preferences: SharedPreferences) {
-        preferences.getBoolean(IS_LOGGED_IN, false).let { isLoggedIn ->
-            if (isLoggedIn) {
-                openTrackActivity()
-            } else {
-                openLoginActivity()
-            }
-            finish()
+        val isLoggedIn = preferences.getBoolean(IS_LOGGED_IN, false)
+        val lastLogin = preferences.getLong(LAST_LOGIN, 0L)
+        if (isLoggedIn && !isTokenExpired(lastLogin)) {
+            openTrackActivity()
+        } else {
+            openLoginActivity()
         }
+        finish()
+
     }
+
+    private fun isTokenExpired(lastLogin: Long) = (System.currentTimeMillis() - lastLogin) >= 60 * 60 * 1000
 
     private fun openTrackActivity() {
         startActivity(Intent(this, TrackActivity::class.java))

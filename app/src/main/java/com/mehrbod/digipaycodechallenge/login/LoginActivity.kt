@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.mehrbod.digipaycodechallenge.MainActivity
 import com.mehrbod.digipaycodechallenge.MainActivity.Companion.IS_LOGGED_IN
+import com.mehrbod.digipaycodechallenge.MainActivity.Companion.LAST_LOGIN
 import com.mehrbod.digipaycodechallenge.MainActivity.Companion.TOKEN
 import com.mehrbod.digipaycodechallenge.R
 import com.mehrbod.digipaycodechallenge.track.TrackActivity
@@ -72,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         sharedPreferences.edit(commit = true) {
             putBoolean(IS_LOGGED_IN, true)
+            putLong(LAST_LOGIN, System.currentTimeMillis())
             putString(TOKEN, token)
         }
         finish()
