@@ -24,6 +24,7 @@ class TrackActivity : AppCompatActivity() {
     private fun setupSearchButton() {
         search_button.setOnClickListener {
             openSearchActivity()
+            viewModel.doHandleInitialTracks()
         }
     }
 
