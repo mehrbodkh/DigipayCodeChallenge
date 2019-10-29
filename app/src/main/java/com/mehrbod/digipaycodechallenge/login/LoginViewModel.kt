@@ -8,12 +8,13 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class LoginViewModel : ViewModel(), KoinComponent {
-    val repository: LoginRepository by inject()
     val isLoggedIn = MutableLiveData<Boolean>().apply { value = false }
+
+    private val repository: LoginRepository by inject()
 
     fun doHandleLogin(username: String, password: String) {
         viewModelScope.launch {
-            val loggedIn = repository.sendLoginRequestAndConfirm()
+            val loggedIn = repository.sendLoginRequestAndConfirm(username, password)
             isLoggedIn.value = loggedIn
         }
     }
