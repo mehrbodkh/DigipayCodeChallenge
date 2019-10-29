@@ -2,7 +2,6 @@ package com.mehrbod.digipaycodechallenge.track
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.widget.Toast
 import androidx.activity.viewModels
