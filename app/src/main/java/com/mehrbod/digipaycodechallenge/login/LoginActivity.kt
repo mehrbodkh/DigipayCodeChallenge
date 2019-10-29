@@ -3,11 +3,9 @@ package com.mehrbod.digipaycodechallenge.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
-import androidx.lifecycle.Observer
 import com.mehrbod.digipaycodechallenge.MainActivity
 import com.mehrbod.digipaycodechallenge.MainActivity.Companion.IS_LOGGED_IN
 import com.mehrbod.digipaycodechallenge.MainActivity.Companion.TOKEN
@@ -64,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 AuthenticationResponse.Type.ERROR -> {
-
+                    Toast.makeText(this, "Cannot log in.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
