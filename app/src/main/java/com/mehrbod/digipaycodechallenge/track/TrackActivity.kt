@@ -3,6 +3,8 @@ package com.mehrbod.digipaycodechallenge.track
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -32,6 +34,7 @@ class TrackActivity : AppCompatActivity() {
         setupSearchButton()
         setupList()
         bindTracks()
+        bindErrors()
     }
 
     private fun setupSearchButton() {
@@ -55,7 +58,7 @@ class TrackActivity : AppCompatActivity() {
     private fun bindTracks() {
         viewModel.latestTracks.observe(this,
             Observer { latestReleases ->
-                Log.d("MehrbodLog", latestReleases.toString())
+                progress_bar.visibility = GONE
                 latestReleases?.let { updateList(it) }
             })
     }
@@ -65,4 +68,14 @@ class TrackActivity : AppCompatActivity() {
         latestReleasesAdapter.notifyDataSetChanged()
     }
 
+    private fun bindErrors() {
+        viewModel.error.observe(this,
+            Observer { error ->
+                error?.let {
+                    progress_bar.visibility = GONE
+                    Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                    viewModel.error.value = null
+                }
+            })
+    }
 }
