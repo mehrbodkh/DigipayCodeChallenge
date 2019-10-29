@@ -1,76 +1,66 @@
-package com.mehrbod.digipaycodechallenge.track
+package com.mehrbod.digipaycodechallenge.search
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View.GONE
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mehrbod.digipaycodechallenge.R
-import com.mehrbod.digipaycodechallenge.api.LatestReleasesResponse
-import com.mehrbod.digipaycodechallenge.search.SearchActivity
+import com.mehrbod.digipaycodechallenge.api.SearchResult
+import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search.search_button
 import kotlinx.android.synthetic.main.activity_track.*
 
-class TrackActivity : AppCompatActivity() {
-    private val viewModel by viewModels<TrackViewModel>()
+class SearchActivity : AppCompatActivity() {
 
-    private var latestReleasesAdapter = LatestReleasesAdapter(this)
+    private val viewModel by viewModels<SearchViewModel>()
+
+    private val searchAdapter = SearchAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_track)
+        setContentView(R.layout.activity_search)
         setupViews()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.doHandleInitialTracks()
     }
 
     private fun setupViews() {
         setupSearchButton()
         setupList()
-        bindTracks()
+        bindResults()
         bindErrors()
     }
 
     private fun setupSearchButton() {
         search_button.setOnClickListener {
-            openSearchActivity()
+            viewModel.doHandleSearch(search_edit_text.text.toString())
         }
     }
 
-    private fun openSearchActivity() {
-        startActivity(Intent(this, SearchActivity::class.java))
-    }
-
     private fun setupList() {
-        tracks_list.apply {
-            this.adapter = latestReleasesAdapter
+        search_list.apply {
+            adapter = searchAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
     }
 
-    private fun bindTracks() {
-        viewModel.latestTracks.observe(this,
+    private fun bindResults() {
+        viewModel.searchResult.observe(this,
             Observer { latestReleases ->
-                progress_bar.visibility = GONE
                 latestReleases?.let { updateList(it) }
             })
     }
 
-    private fun updateList(latestReleasesResponse: LatestReleasesResponse) {
-        latestReleasesAdapter.songs = latestReleasesResponse
-        latestReleasesAdapter.notifyDataSetChanged()
+    private fun updateList(searchResult: SearchResult) {
+        searchAdapter.songs = searchResult
+        searchAdapter.notifyDataSetChanged()
     }
 
     private fun bindErrors() {
         viewModel.error.observe(this,
             Observer { error ->
                 error?.let {
-                    progress_bar.visibility = GONE
                     Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                     viewModel.error.value = null
                 }

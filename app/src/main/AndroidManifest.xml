@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.mehrbod.digipaycodechallenge">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -9,6 +10,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".search.SearchActivity">
+        </activity>
         <activity android:name=".track.TrackActivity">
         </activity>
         <activity
@@ -24,7 +27,7 @@
         </activity>
         <activity
                 android:name="com.spotify.sdk.android.authentication.LoginActivity"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>
