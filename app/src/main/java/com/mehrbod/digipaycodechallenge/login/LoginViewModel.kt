@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
+@Deprecated("Use Spotify authentication SDK instead.")
 class LoginViewModel : ViewModel(), KoinComponent {
     val isLoggedIn = MutableLiveData<Boolean>().apply { value = false }
 
